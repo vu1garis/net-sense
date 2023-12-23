@@ -8,6 +8,8 @@ namespace SenseHatCli.Implementaiton;
 
 internal abstract class SenseHatCommand : Command, IDisposable
 {
+    private static UnitsNet.Pressure s_defaultSeaLevelPressure = WeatherHelper.MeanSeaLevel;
+
     private bool _disposed;
 
     private Lazy<SenseHat> _sh = new Lazy<SenseHat>(() => new SenseHat());
@@ -25,6 +27,29 @@ internal abstract class SenseHatCommand : Command, IDisposable
     protected void Clear()
     {
         Hat.Fill(Color.Black);
+    }
+
+    protected SensorReadings ReadSensors()
+    {
+        var t1 = Hat.Temperature;
+        var p = Hat.Pressure;
+
+        return new SensorReadings
+        {
+            Temp1 = t1,
+            Temp2 = Hat.Temperature2,
+            Pressure = p,
+            Humidity = Hat.Humidity,
+            Acceleration = Hat.Acceleration,
+            AngularRate = Hat.AngularRate,
+            MagneticInduction = Hat.MagneticInduction,
+            Altitude = WeatherHelper.CalculateAltitude(p, s_defaultSeaLevelPressure, t1),
+            HoldingButton = Hat.HoldingButton,
+            HoldingUp = Hat.HoldingUp,
+            HoldingDown = Hat.HoldingDown,
+            HoldingLeft = Hat.HoldingLeft,
+            HoldingRight = Hat.HoldingRight
+        };
     }
 
     public void Dispose()
