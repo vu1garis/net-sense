@@ -12,7 +12,7 @@ internal sealed class CurrentSensorValuesCommand : SenseHatCommand
     {
     }
 
-    public override void Configure()
+    protected override void Configure()
     {
         this.SetHandler(() => 
         {

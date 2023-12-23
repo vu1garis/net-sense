@@ -22,7 +22,7 @@ internal abstract class SenseHatCommand : Command, IDisposable
 
     protected SenseHat Hat => _sh.Value;
 
-    public abstract void Configure();
+    protected abstract void Configure();
 
     protected void Clear()
     {

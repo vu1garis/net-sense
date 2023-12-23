@@ -12,7 +12,7 @@ internal sealed class ClearDisplayCommand : SenseHatCommand
     {
     }
 
-    public override void Configure()
+    protected override void Configure()
     {
         this.SetHandler(() => this.Clear());
     }

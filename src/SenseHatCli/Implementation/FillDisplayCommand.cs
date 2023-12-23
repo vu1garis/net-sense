@@ -15,7 +15,7 @@ internal sealed class FillDisplayCommand : SenseHatCommand
     {
     }
 
-    public override void Configure()
+    protected override void Configure()
     {
         var rOption = new Option<int>(
             name: "--red",

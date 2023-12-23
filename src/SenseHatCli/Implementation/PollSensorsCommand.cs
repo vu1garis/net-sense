@@ -13,7 +13,7 @@ internal sealed class PollSensorsCommand : SenseHatCommand
     {
     }
 
-    public override void Configure()
+    protected override void Configure()
     {
         var intervalOption = new Option<int>(
             name: "--interval-ms",
