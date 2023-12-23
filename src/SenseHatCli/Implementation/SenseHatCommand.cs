@@ -10,20 +10,21 @@ internal abstract class SenseHatCommand : Command, IDisposable
 {
     private bool _disposed;
 
-    private SenseHat? _sh = new SenseHat();
+    private Lazy<SenseHat> _sh = new Lazy<SenseHat>(() => new SenseHat());
 
     protected SenseHatCommand(string name, string description)
         : base(name, description)
     {
+        Configure();
     }
 
-    protected SenseHat? Hat => _sh;
+    protected SenseHat Hat => _sh.Value;
 
     public abstract void Configure();
 
     protected void Clear()
     {
-        _sh?.Fill(Color.Black);
+        Hat.Fill(Color.Black);
     }
 
     public void Dispose()
@@ -41,10 +42,9 @@ internal abstract class SenseHatCommand : Command, IDisposable
             {
                 if (disposing)
                 {
-                    if (_sh != null)
+                    if (_sh.IsValueCreated)
                     {
-                        _sh.Dispose();
-                        _sh = null;
+                        _sh.Value.Dispose();
                     }
                 }
             }

@@ -11,12 +11,12 @@ class Program
         var rootCommand = new RootCommand("SenseHat CLI");
 
         using var clearDisplayCommand = new ClearDisplayCommand();
-        clearDisplayCommand.Configure();
-        rootCommand.AddCommand(clearDisplayCommand);
-
         using var currentSensorValuesCommand = new CurrentSensorValuesCommand();
-        currentSensorValuesCommand.Configure();
+        using var fillCommand = new FillDisplayCommand();
+
+        rootCommand.AddCommand(clearDisplayCommand);
         rootCommand.AddCommand(currentSensorValuesCommand);
+        rootCommand.AddCommand(fillCommand);
         
         return rootCommand.Invoke(args);
     }
