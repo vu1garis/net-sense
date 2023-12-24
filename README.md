@@ -16,5 +16,6 @@ Commands:
   clear    clear the sensor display
   current  display the current sensor values to the console
   fill     fill the sensor display
-  poll     poll the sensor valuess and write to the console
+  poll     poll the sensor values and write to the console
+  random   fill the sensor display with random RGB colours
 ```
