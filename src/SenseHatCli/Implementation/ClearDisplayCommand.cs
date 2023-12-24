@@ -1,8 +1,5 @@
 using System.CommandLine;
 
-using Iot.Device.Common;
-using Iot.Device.SenseHat;
-
 namespace SenseHatCli.Implementaiton;
 
 internal sealed class ClearDisplayCommand : SenseHatCommand

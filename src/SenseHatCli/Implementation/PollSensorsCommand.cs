@@ -9,7 +9,7 @@ namespace SenseHatCli.Implementaiton;
 internal sealed class PollSensorsCommand : SenseHatCommand
 {
     public PollSensorsCommand(ISenseHatClient client)
-        : base("poll", "poll the sensor valuess and write to the console", client)
+        : base("poll", "poll the sensor values and write to the console", client)
     {
     }
 

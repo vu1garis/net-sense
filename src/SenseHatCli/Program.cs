@@ -11,14 +11,15 @@ class Program
 {
     static int Main(string[] args)
     {
-
         var sc = new ServiceCollection();
 
         sc.AddSingleton<ISenseHatClient, SenseHatClient>();
+        sc.AddSingleton<IColorFactory, ColorFactory>();
         sc.AddSingleton<ClearDisplayCommand>();
         sc.AddSingleton<CurrentSensorValuesCommand>();
         sc.AddSingleton<FillDisplayCommand>();
         sc.AddSingleton<PollSensorsCommand>();
+        sc.AddSingleton<RandomFillCommand>();
 
         using var sp = sc.BuildServiceProvider();
 
@@ -28,6 +29,7 @@ class Program
         rootCommand.AddCommand(sp.GetRequiredService<CurrentSensorValuesCommand>());
         rootCommand.AddCommand(sp.GetRequiredService<FillDisplayCommand>());
         rootCommand.AddCommand(sp.GetRequiredService<PollSensorsCommand>());
+        rootCommand.AddCommand(sp.GetRequiredService<RandomFillCommand>());
         
         return rootCommand.Invoke(args);
     }

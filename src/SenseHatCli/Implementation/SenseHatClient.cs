@@ -17,6 +17,8 @@ internal sealed class SenseHatClient : ISenseHatClient
     public SenseHat Hat => _sh.Value;
 
     public void Clear() => Fill(Color.Black);
+
+    public void Fill(ReadOnlySpan<Color> colors)  => Hat.Write(colors);
     
     public void Fill(Color color) => Hat.Fill(color);
 
@@ -42,6 +44,8 @@ internal sealed class SenseHatClient : ISenseHatClient
             HoldingRight = Hat.HoldingRight
         };
     }
+
+    #region IDisposable
 
     public void Dispose()
     {
@@ -70,4 +74,6 @@ internal sealed class SenseHatClient : ISenseHatClient
             }
         }
     }
+
+    #endregion
 }

@@ -14,5 +14,7 @@ internal interface ISenseHatClient : IDisposable
 
     void Fill(Color color); 
     
+    void Fill(ReadOnlySpan<Color> colors);
+
     SensorReadings ReadSensors();
 }
