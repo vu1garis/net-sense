@@ -6,77 +6,19 @@ using Iot.Device.SenseHat;
 
 namespace SenseHatCli.Implementaiton;
 
-internal abstract class SenseHatCommand : Command, IDisposable
+internal abstract class SenseHatCommand : Command
 {
-    private static UnitsNet.Pressure s_defaultSeaLevelPressure = WeatherHelper.MeanSeaLevel;
+    private readonly ISenseHatClient _client;
 
-    private bool _disposed;
-
-    private Lazy<SenseHat> _sh = new Lazy<SenseHat>(() => new SenseHat());
-
-    protected SenseHatCommand(string name, string description)
+    protected SenseHatCommand(string name, string description, ISenseHatClient client)
         : base(name, description)
     {
+        _client = client ?? throw new ArgumentNullException(nameof(client));
+
         Configure();
     }
 
-    protected SenseHat Hat => _sh.Value;
+    protected ISenseHatClient Client => _client;
 
     protected abstract void Configure();
-
-    protected void Clear()
-    {
-        Hat.Fill(Color.Black);
-    }
-
-    protected SensorReadings ReadSensors()
-    {
-        var t1 = Hat.Temperature;
-        var p = Hat.Pressure;
-
-        return new SensorReadings
-        {
-            Temp1 = t1,
-            Temp2 = Hat.Temperature2,
-            Pressure = p,
-            Humidity = Hat.Humidity,
-            Acceleration = Hat.Acceleration,
-            AngularRate = Hat.AngularRate,
-            MagneticInduction = Hat.MagneticInduction,
-            Altitude = WeatherHelper.CalculateAltitude(p, s_defaultSeaLevelPressure, t1),
-            HoldingButton = Hat.HoldingButton,
-            HoldingUp = Hat.HoldingUp,
-            HoldingDown = Hat.HoldingDown,
-            HoldingLeft = Hat.HoldingLeft,
-            HoldingRight = Hat.HoldingRight
-        };
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-
-        GC.SuppressFinalize(this);
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!_disposed)
-        {
-            try
-            {
-                if (disposing)
-                {
-                    if (_sh.IsValueCreated)
-                    {
-                        _sh.Value.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                _disposed = true;
-            }
-        }
-    }
 }

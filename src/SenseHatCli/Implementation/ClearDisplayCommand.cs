@@ -7,13 +7,13 @@ namespace SenseHatCli.Implementaiton;
 
 internal sealed class ClearDisplayCommand : SenseHatCommand
 {
-    public ClearDisplayCommand()
-        : base("clear", "clear the sensor display")
+    public ClearDisplayCommand(ISenseHatClient client)
+        : base("clear", "clear the sensor display", client)
     {
     }
 
     protected override void Configure()
     {
-        this.SetHandler(() => this.Clear());
+        this.SetHandler(() => Client.Clear());
     }
 }

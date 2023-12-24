@@ -7,8 +7,8 @@ namespace SenseHatCli.Implementaiton;
 
 internal sealed class CurrentSensorValuesCommand : SenseHatCommand
 {
-    public CurrentSensorValuesCommand()
-        : base("current", "display the current sensor values to the console")
+    public CurrentSensorValuesCommand(ISenseHatClient client)
+        : base("current", "display the current sensor values to the console", client)
     {
     }
 
@@ -16,7 +16,7 @@ internal sealed class CurrentSensorValuesCommand : SenseHatCommand
     {
         this.SetHandler(() => 
         {
-            var current = this.ReadSensors();
+            var current = Client.ReadSensors();
 
             Console.WriteLine(current.ToString());
         });

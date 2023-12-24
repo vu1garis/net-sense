@@ -8,8 +8,8 @@ namespace SenseHatCli.Implementaiton;
 
 internal sealed class PollSensorsCommand : SenseHatCommand
 {
-    public PollSensorsCommand()
-        : base("poll", "poll the sensor valuess and write to the console")
+    public PollSensorsCommand(ISenseHatClient client)
+        : base("poll", "poll the sensor valuess and write to the console", client)
     {
     }
 
@@ -26,7 +26,7 @@ internal sealed class PollSensorsCommand : SenseHatCommand
         {
             while (true)
             {
-                var current = this.ReadSensors();
+                var current = Client.ReadSensors();
 
                 Console.WriteLine(current.ToString());
 

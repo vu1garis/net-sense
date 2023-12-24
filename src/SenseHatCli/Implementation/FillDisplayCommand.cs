@@ -10,8 +10,8 @@ namespace SenseHatCli.Implementaiton;
 
 internal sealed class FillDisplayCommand : SenseHatCommand
 {
-    public FillDisplayCommand()
-        : base("fill", "fill the sensor display")
+    public FillDisplayCommand(ISenseHatClient client)
+        : base("fill", "fill the sensor display", client)
     {
     }
 
@@ -46,7 +46,7 @@ internal sealed class FillDisplayCommand : SenseHatCommand
         {
             var c = Color.FromArgb(alpha: a, red: r, green: g, blue: b);
             
-            Hat.Fill(c);
+            Client.Fill(c);
         }, aOption, rOption, gOption, bOption);
     }
 }
