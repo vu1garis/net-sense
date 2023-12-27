@@ -20,9 +20,27 @@ public class SenseHatTextMapTests
     }
 
     [Theory]
+    [InlineData('A')]
+    [InlineData('B')]
+    [InlineData('C')]
+    [InlineData('D')]
+    [InlineData('E')]
+    [InlineData('F')]    
+    [InlineData('G')]
+    [InlineData('H')]
+    [InlineData('I')]
+    [InlineData('J')]
+    [InlineData(' ')]    
+    [InlineData('0')]
     [InlineData('1')]
     [InlineData('2')]
+    [InlineData('3')]
+    [InlineData('4')]
+    [InlineData('5')]    
+    [InlineData('6')]
     [InlineData('7')]
+    [InlineData('8')]
+    [InlineData('9')]    
     public void TextMapGetBitMapTheorySuccess(char value)
     {
         var sc = new ServiceCollection();

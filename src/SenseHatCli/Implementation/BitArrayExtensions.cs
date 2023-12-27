@@ -6,7 +6,7 @@ namespace SenseHatCli.Implementaiton;
 
 internal static class BitArrayExtensions
 {
-    public static ReadOnlySpan<Color> Color(this BitArray array, Color foreground, Color background)
+    public static Color[] Color(this BitArray array, Color foreground, Color background)
     {
         if (array == null)
         {

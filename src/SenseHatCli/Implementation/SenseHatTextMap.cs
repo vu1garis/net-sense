@@ -44,8 +44,11 @@ internal sealed class SenseHatTextMap : ISenseHatTextMap
                     throw new InvalidOperationException($"Error reading cmap.xml, invalid character arraly length for entry {key}.");
                 }
 
-                map[key] = bm;
+                map.Add(key, bm);
             }
+
+            // add an entry for SPACE
+            map.Add(' ', new BitArray(MAX_PIXELS, false));
 
             return map;
         }
