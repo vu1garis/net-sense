@@ -25,8 +25,8 @@ internal sealed class RandomFillCommand : SenseHatCommand
             description: "Polling interval in milliseconds",
             getDefaultValue: () => 1000);
 
-            this.Add(loopOption);
-            this.Add(intervalOption);
+        this.Add(loopOption);
+        this.Add(intervalOption);
 
         this.SetHandler((loop, interval) => 
         {

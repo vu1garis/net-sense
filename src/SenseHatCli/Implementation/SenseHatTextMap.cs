@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace SenseHatCli.Implementaiton;
 
-internal sealed class SensHatTextMap : ISensHatTextMap
+internal sealed class SenseHatTextMap : ISenseHatTextMap
 {
     private const int MAX_PIXELS = 64;
 

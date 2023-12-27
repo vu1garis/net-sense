@@ -14,8 +14,29 @@ public class SenseHatTextMapTests
 
         using var sp = sc.BuildServiceProvider();
 
-        var actual = sp.GetRequiredService<ISensHatTextMap>();
+        var actual = sp.GetRequiredService<ISenseHatTextMap>();
 
         Assert.NotNull(actual);
+    }
+
+    [Theory]
+    [InlineData('1')]
+    [InlineData('2')]
+    [InlineData('7')]
+    public void TextMapGetBitMapTheorySuccess(char value)
+    {
+        var sc = new ServiceCollection();
+
+        sc.AddCommandServices();
+
+        using var sp = sc.BuildServiceProvider();
+
+        var map = sp.GetRequiredService<ISenseHatTextMap>();
+
+        var actual = map.GetBitMap(value);
+
+        Assert.NotNull(actual);
+
+        Assert.Equal(64, actual.Length);
     }
 }

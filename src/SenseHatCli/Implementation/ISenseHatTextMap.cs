@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace SenseHatCli.Implementaiton;
 
-internal interface ISensHatTextMap
+internal interface ISenseHatTextMap
 {
     bool ContainsKey(char character);
 
