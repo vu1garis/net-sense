@@ -13,13 +13,7 @@ class Program
     {
         var sc = new ServiceCollection();
 
-        sc.AddSingleton<ISenseHatClient, SenseHatClient>();
-        sc.AddSingleton<IColorFactory, ColorFactory>();
-        sc.AddSingleton<ClearDisplayCommand>();
-        sc.AddSingleton<CurrentSensorValuesCommand>();
-        sc.AddSingleton<FillDisplayCommand>();
-        sc.AddSingleton<PollSensorsCommand>();
-        sc.AddSingleton<RandomFillCommand>();
+        sc.AddCommandServices();
 
         using var sp = sc.BuildServiceProvider();
 
