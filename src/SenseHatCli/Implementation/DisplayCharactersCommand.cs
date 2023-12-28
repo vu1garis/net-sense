@@ -20,7 +20,7 @@ internal sealed class DisplayCharactersCommand : SenseHatCommand
         var displayOption = new Option<string>(  
             name: "--display",
             description: "Characters to display",
-            getDefaultValue: () => "127");
+            getDefaultValue: () => "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 
         var fgOption = new Option<string>(  
             name: "--foreground",

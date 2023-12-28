@@ -17,36 +17,18 @@ internal sealed class FillDisplayCommand : SenseHatCommand
 
     protected override void Configure()
     {
-        var rOption = new Option<int>(
-            name: "--red",
-            description: "Red channel 0 - 255",
-            getDefaultValue: () => 0);
+        var colourOption = new Option<string>(
+            name: "--colour",
+            description: "System.Drawing.Color name (default Red)",
+            getDefaultValue: () => "Red");
 
-        var gOption = new Option<int>(
-            name: "--green",
-            description: "Green channel 0 - 255",
-            getDefaultValue: () => 0);
+        this.Add(colourOption);
 
-        var bOption = new Option<int>(
-            name: "--blue",
-            description: "Blue channel 0 - 255",
-            getDefaultValue: () => 0);
-
-        var aOption = new Option<int>(
-            name: "--alpha",
-            description: "Alpha channel 0 - 255",
-            getDefaultValue: () => 0);    
-
-        this.Add(aOption);
-        this.Add(rOption);
-        this.Add(gOption);
-        this.Add(bOption);
-
-        this.SetHandler((a, r, g, b) =>
+        this.SetHandler((colorName) =>
         {
-            var c = Color.FromArgb(alpha: a, red: r, green: g, blue: b);
+            var c = Color.FromName(colorName);
             
             Client.Fill(c);
-        }, aOption, rOption, gOption, bOption);
+        }, colourOption);
     }
 }

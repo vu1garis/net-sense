@@ -18,4 +18,5 @@ Commands:
   fill     fill the sensor display
   poll     poll the sensor values and write to the console
   random   fill the sensor display with random RGB colours
+  char     sequentially display one or more characters
 ```
