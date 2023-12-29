@@ -110,16 +110,24 @@ internal sealed class SenseHatFrame
             rows: rowFilter.End.Value - rowFilter.Start.Value, 
             columns: columnFilter.End.Value - columnFilter.Start.Value);
 
+        var subR = 0;
+        var subC = 0;
+
         var selectedRows = _frame[rowFilter];
 
-        for (int r = 0; r < selectedRows.Length; r++)
+        foreach (var row in selectedRows)
         {
-            var selectedColumns = selectedRows[r][columnFilter];
+            var selectedColumns = row[columnFilter];
 
-            for (int c = 0; c < selectedColumns.Length; c++)
+            foreach (var cell in selectedColumns)
             {
-                subFrame.Set(r, c, selectedColumns[c]);
+                subFrame.Set(subR, subC, cell);
+
+                subC++;
             }
+
+            subR++;
+            subC = 0;
         }
 
         return subFrame;
