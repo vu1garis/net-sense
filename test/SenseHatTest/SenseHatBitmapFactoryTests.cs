@@ -3,10 +3,10 @@ using SenseHatCli.Implementaiton;
 
 namespace SenseHatTest;
 
-public class SenseHatTextMapTests
+public class SenseHatBitmapFactoryTests
 {
     [Fact]
-    public void TextMapCompositionSuccess()
+    public void FrameMapCompositionSuccess()
     {
         var sc = new ServiceCollection();
 
@@ -14,7 +14,7 @@ public class SenseHatTextMapTests
 
         using var sp = sc.BuildServiceProvider();
 
-        var actual = sp.GetRequiredService<ISenseHatTextMap>();
+        var actual = sp.GetRequiredService<ISenseHatBitmapFactory>();
 
         Assert.NotNull(actual);
     }
@@ -57,7 +57,7 @@ public class SenseHatTextMapTests
     [InlineData('7')]
     [InlineData('8')]
     [InlineData('9')]    
-    public void TextMapGetBitMapTheorySuccess(char value)
+    public void FrameMapGetBitMapTheorySuccess(char value)
     {
         var sc = new ServiceCollection();
 
@@ -65,7 +65,7 @@ public class SenseHatTextMapTests
 
         using var sp = sc.BuildServiceProvider();
 
-        var map = sp.GetRequiredService<ISenseHatTextMap>();
+        var map = sp.GetRequiredService<ISenseHatBitmapFactory>();
 
         var actual = map.GetBitMap(value);
 

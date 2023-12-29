@@ -7,12 +7,12 @@ namespace SenseHatCli.Implementaiton;
 
 internal sealed class DisplayCharactersCommand : SenseHatCommand
 {
-    private readonly ISenseHatTextMap _textMap;
+    private readonly ISenseHatBitmapFactory _factory;
 
-    public DisplayCharactersCommand(ISenseHatClient client, ISenseHatTextMap textMap)
+    public DisplayCharactersCommand(ISenseHatClient client, ISenseHatBitmapFactory factory)
         : base("char", "sequentially display one or more characters", client)
     {
-        _textMap = textMap ?? throw new ArgumentNullException(nameof(textMap));
+        _factory = factory ?? throw new ArgumentNullException(nameof(factory));
     }
 
     protected override void Configure()
@@ -62,7 +62,7 @@ internal sealed class DisplayCharactersCommand : SenseHatCommand
                     }
                     else
                     {
-                        var bm = _textMap.GetBitMap(c) ?? throw new InvalidOperationException($"Character {c} not currently supported");
+                        var bm = _factory.GetBitMap(c) ?? throw new InvalidOperationException($"Character {c} not currently supported");
 
                         var fg = Color.FromName(fgName);
 

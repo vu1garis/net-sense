@@ -8,7 +8,7 @@ internal static class ServiceCollectionExtensions
     {
         sc.AddSingleton<ISenseHatClient, SenseHatClient>();
         sc.AddSingleton<IColorFactory, ColorFactory>();
-        sc.AddSingleton<ISenseHatTextMap, SenseHatTextMap>();
+        sc.AddSingleton<ISenseHatBitmapFactory, SenseHatBitmapFactory>();
 
         sc.AddSingleton<ClearDisplayCommand>();
         sc.AddSingleton<CurrentSensorValuesCommand>();
