@@ -8,9 +8,11 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddSenseHatServices(this IServiceCollection sc)
     {
-        sc.AddSingleton<ISenseHatClient, SenseHatClient>();
-        sc.AddSingleton<IColorFactory, ColorFactory>();
         sc.AddSingleton<ISenseHatBitmapFactory, SenseHatBitmapFactory>();
+        sc.AddSingleton<IColorFactory, ColorFactory>();
+        
+        sc.AddSingleton<ISenseHatClient, SenseHatClient>();
+        sc.AddSingleton<ISenseHatDisplay, SenseHatDisplay>();
 
         return sc;
     }
