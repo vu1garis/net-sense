@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 
-namespace SenseHatCli.Implementaiton;
+namespace SenseHatLib;
 
-internal interface ISenseHatBitmapFactory
+public interface ISenseHatBitmapFactory
 {
     bool ContainsKey(char character);
 

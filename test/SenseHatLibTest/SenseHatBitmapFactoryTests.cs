@@ -1,7 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
-using SenseHatCli.Implementaiton;
 
-namespace SenseHatTest;
+using SenseHatLib;
+using SenseHatLib.Implementation;
+
+namespace SenseHatLibTest;
 
 public class SenseHatBitmapFactoryTests
 {
@@ -10,7 +12,7 @@ public class SenseHatBitmapFactoryTests
     {
         var sc = new ServiceCollection();
 
-        sc.AddCommandServices();
+        sc.AddSenseHatServices();
 
         using var sp = sc.BuildServiceProvider();
 
@@ -61,7 +63,7 @@ public class SenseHatBitmapFactoryTests
     {
         var sc = new ServiceCollection();
 
-        sc.AddCommandServices();
+        sc.AddSenseHatServices();
 
         using var sp = sc.BuildServiceProvider();
 

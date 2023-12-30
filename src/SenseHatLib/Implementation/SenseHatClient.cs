@@ -1,10 +1,9 @@
-using System.CommandLine;
 using System.Drawing;
 
 using Iot.Device.Common;
 using Iot.Device.SenseHat;
 
-namespace SenseHatCli.Implementaiton;
+namespace SenseHatLib.Implementation;
 
 internal sealed class SenseHatClient : ISenseHatClient
 {
@@ -16,7 +15,7 @@ internal sealed class SenseHatClient : ISenseHatClient
 
     public SenseHat Hat => _sh.Value;
 
-    public void Clear() => Fill(Color.Black);
+    public void Clear() => Fill(Color.Empty);
 
     public void Fill(ReadOnlySpan<Color> colors)  => Hat.Write(colors);
     

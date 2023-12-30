@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 
-namespace SenseHatCli.Implementaiton;
+namespace SenseHatLib.Implementation;
 
 internal sealed class SenseHatBitmapFactory : ISenseHatBitmapFactory
 {
@@ -16,7 +16,7 @@ internal sealed class SenseHatBitmapFactory : ISenseHatBitmapFactory
         {
             var assembly = Assembly.GetExecutingAssembly();
 
-            using var res = assembly.GetManifestResourceStream("SenseHatCli.tmap.xml") ?? throw new InvalidOperationException("tmap.xml not found");
+            using var res = assembly.GetManifestResourceStream("SenseHatLib.tmap.xml") ?? throw new InvalidOperationException("tmap.xml not found");
 
             using var sr = new StreamReader(res, Encoding.UTF8) ?? throw new InvalidOperationException("read tmap.xml failed");
 

@@ -1,6 +1,4 @@
-using System.CommandLine;
-
-namespace SenseHatCli.Implementaiton;
+namespace SenseHatCli.Commands;
 
 internal sealed class ClearDisplayCommand : SenseHatCommand
 {

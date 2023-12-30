@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Drawing;
-using SenseHatCli.Implementaiton;
 
-namespace SenseHatTest;
+using SenseHatLib.Implementation;
+
+namespace SenseHatLibTest;
 
 public class SenseHatFrameTests
 {

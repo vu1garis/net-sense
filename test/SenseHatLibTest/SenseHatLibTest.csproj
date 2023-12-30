@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SenseHatCli\SenseHatCli.csproj" />
+    <ProjectReference Include="..\..\src\SenseHatLib\SenseHatLib.csproj" />
   </ItemGroup>
 
 </Project>

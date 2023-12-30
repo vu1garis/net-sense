@@ -1,10 +1,4 @@
-using System.CommandLine;
-using System.Drawing;
-
-using Iot.Device.Common;
-using Iot.Device.SenseHat;
-
-namespace SenseHatCli.Implementaiton;
+namespace SenseHatCli.Commands;
 
 internal abstract class SenseHatCommand : Command
 {

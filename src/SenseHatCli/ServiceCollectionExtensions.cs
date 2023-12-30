@@ -1,15 +1,12 @@
 using Microsoft.Extensions.DependencyInjection;
+using SenseHatCli.Commands;
 
-namespace SenseHatCli.Implementaiton;
+namespace SenseHatCli;
 
-internal static class ServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddCommandServices(this IServiceCollection sc)
+    public static IServiceCollection AddSenseHatCommands(this IServiceCollection sc)
     {
-        sc.AddSingleton<ISenseHatClient, SenseHatClient>();
-        sc.AddSingleton<IColorFactory, ColorFactory>();
-        sc.AddSingleton<ISenseHatBitmapFactory, SenseHatBitmapFactory>();
-
         sc.AddSingleton<ClearDisplayCommand>();
         sc.AddSingleton<CurrentSensorValuesCommand>();
         sc.AddSingleton<FillDisplayCommand>();

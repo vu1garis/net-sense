@@ -3,7 +3,8 @@ using System.CommandLine;
 
 using Microsoft.Extensions.DependencyInjection;
 
-using SenseHatCli.Implementaiton;
+using SenseHatLib;
+using SenseHatCli.Commands;
 
 namespace SenseHatCli;
 
@@ -13,7 +14,8 @@ class Program
     {
         var sc = new ServiceCollection();
 
-        sc.AddCommandServices();
+        sc.AddSenseHatServices();
+        sc.AddSenseHatCommands();
 
         using var sp = sc.BuildServiceProvider();
 

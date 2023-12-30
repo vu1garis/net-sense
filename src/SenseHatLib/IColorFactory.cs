@@ -1,8 +1,8 @@
 using System.Drawing;
 
-namespace SenseHatCli.Implementaiton;
+namespace SenseHatLib;
 
-internal interface IColorFactory
+public interface IColorFactory
 {
     ReadOnlySpan<Color> GetRandomColors(int count = 64);
 }

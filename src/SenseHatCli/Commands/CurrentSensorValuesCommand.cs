@@ -1,9 +1,4 @@
-using System.CommandLine;
-
-using Iot.Device.Common;
-using Iot.Device.SenseHat;
-
-namespace SenseHatCli.Implementaiton;
+namespace SenseHatCli.Commands;
 
 internal sealed class CurrentSensorValuesCommand : SenseHatCommand
 {

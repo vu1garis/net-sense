@@ -2,9 +2,9 @@ using System;
 using Iot.Device.SenseHat;
 
 
-namespace SenseHatCli.Implementaiton;
+namespace SenseHatLib;
 
-internal record class SensorReadings
+public record class SensorReadings
 {
     public UnitsNet.Temperature Temp1 { get; init; }
     public UnitsNet.Temperature Temp2 { get; init; }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Drawing;
 using System.Linq;
 
-namespace SenseHatCli.Implementaiton;
+namespace SenseHatLib.Implementation;
 
 internal static class BitArrayExtensions
 {

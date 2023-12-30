@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 
 
-namespace SenseHatCli.Implementaiton;
+namespace SenseHatLib.Implementation;
 
 internal sealed class SenseHatFrame
 {

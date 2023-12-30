@@ -1,18 +1,17 @@
-using System.CommandLine;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
+using SenseHatLib;
 
-namespace SenseHatCli.Implementaiton;
+namespace SenseHatCli.Commands;
 
 internal sealed class DisplayCharactersCommand : SenseHatCommand
 {
-    private readonly ISenseHatBitmapFactory _factory;
+    private readonly ISenseHatDisplay _display;
 
-    public DisplayCharactersCommand(ISenseHatClient client, ISenseHatBitmapFactory factory)
+    public DisplayCharactersCommand(ISenseHatDisplay display, ISenseHatClient client)
         : base("char", "sequentially display one or more characters", client)
     {
-        _factory = factory ?? throw new ArgumentNullException(nameof(factory));
+        _display = display ?? throw new ArgumentNullException(nameof(display));
     }
 
     protected override void Configure()
@@ -50,43 +49,18 @@ internal sealed class DisplayCharactersCommand : SenseHatCommand
 
         this.SetHandler((display, fgName, bgName, loop, interval) => 
         {
-            while (true)
-            {
-                var cache = new Dictionary<char, Color[]>();
+            var fg = Color.FromName(fgName);
 
-                foreach (var c in display)
-                {
-                    if (cache.ContainsKey(c))
-                    {
-                        Client.Fill(cache[c]);
-                    }
-                    else
-                    {
-                        var bm = _factory.GetBitMap(c) ?? throw new InvalidOperationException($"Character {c} not currently supported");
+            var bg = Color.FromName(bgName);
 
-                        var fg = Color.FromName(fgName);
-
-                        var bg = Color.FromName(bgName);
-
-                        var frame = bm.Color(foreground: fg, background: bg);
-
-                        Client.Fill(frame);
-
-                        if (loop)
-                        {
-                            cache[c] = frame;
-                        }
-                    }
-
-                    Thread.Sleep(interval);
-                }
-
-                if (!loop)
-                {
-                    break;
-                }
-            }
-            
+            _display.DisplayText(
+                text: display,
+                foreground: fg,
+                background: bg,
+                loop: loop,
+                scroll: false,
+                delay: interval);
+                
         }, displayOption, fgOption, bgOption, loopOption, intervalOption);
     }
 }

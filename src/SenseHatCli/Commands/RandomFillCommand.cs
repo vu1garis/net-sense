@@ -1,7 +1,6 @@
-using System.CommandLine;
 using System.Threading;
 
-namespace SenseHatCli.Implementaiton;
+namespace SenseHatCli.Commands;
 
 internal sealed class RandomFillCommand : SenseHatCommand
 {

@@ -4,9 +4,9 @@ using System.Drawing;
 using Iot.Device.Common;
 using Iot.Device.SenseHat;
 
-namespace SenseHatCli.Implementaiton;
+namespace SenseHatLib;
 
-internal interface ISenseHatClient : IDisposable
+public interface ISenseHatClient : IDisposable
 {
     SenseHat Hat { get; }
 

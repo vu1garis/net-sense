@@ -1,3 +1,3 @@
 using System.Reflection;
 
-[assembly:System.Runtime.CompilerServices.InternalsVisibleTo("SenseHatTest")]
+//[assembly:System.Runtime.CompilerServices.InternalsVisibleTo("SenseHatTest")]
