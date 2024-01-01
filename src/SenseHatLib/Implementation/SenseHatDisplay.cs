@@ -47,6 +47,8 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
 
         ISenseHatFrame? current = null;
 
+        _client.Clear();
+
         while (true)
         {
             var next = _textBuffer.Next();
