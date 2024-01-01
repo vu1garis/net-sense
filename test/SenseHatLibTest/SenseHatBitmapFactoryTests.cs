@@ -58,7 +58,14 @@ public class SenseHatBitmapFactoryTests
     [InlineData('6')]
     [InlineData('7')]
     [InlineData('8')]
-    [InlineData('9')]    
+    [InlineData('9')] 
+    [InlineData('.')]
+    [InlineData('°')]
+    [InlineData('%')]  
+    [InlineData('-')]
+    [InlineData('_')]
+    [InlineData('=')]  
+    [InlineData('!')]
     public void FrameMapGetBitMapTheorySuccess(char value)
     {
         var sc = new ServiceCollection();
