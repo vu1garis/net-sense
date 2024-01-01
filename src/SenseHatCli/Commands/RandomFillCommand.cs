@@ -20,7 +20,7 @@ internal sealed class RandomFillCommand : SenseHatCommand
             getDefaultValue: () => false);
 
         var intervalOption = new Option<int>(
-            name: "--interval-ms",
+            name: "--interval",
             description: "Polling interval in milliseconds",
             getDefaultValue: () => 1000);
 

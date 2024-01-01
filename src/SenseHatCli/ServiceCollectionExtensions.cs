@@ -12,7 +12,7 @@ public static class ServiceCollectionExtensions
         sc.AddSingleton<FillDisplayCommand>();
         sc.AddSingleton<PollSensorsCommand>();
         sc.AddSingleton<RandomFillCommand>();
-        sc.AddSingleton<DisplayCharactersCommand>();
+        sc.AddSingleton<DisplayTextCommand>();
 
         return sc;
     }

@@ -6,9 +6,9 @@ namespace SenseHatLib.Implementation;
 
 internal sealed class SenseHatFrame
 {
-    private const int SENSEHAT_MAX_ROWS = 8;
+    public const int SENSEHAT_MAX_ROWS = 8;
 
-    private const int SENSEHAT_MAX_COLUMNS = 8;
+    public const int SENSEHAT_MAX_COLUMNS = 8;
 
     private readonly static Color COLOR_OFF = Color.Empty;
 
@@ -70,19 +70,38 @@ internal sealed class SenseHatFrame
 
     public Color Get(int row, int column)
     {
-        AssertInRange(row, column);
+        this.AssertInRange(row, column);
 
         return _frame[row][column];
     }
 
     public void Set(int row, int column, Color color)
     {
-        AssertInRange(row, column);
+        this.AssertInRange(row, column);
 
         _frame[row][column] = color;
     }
 
-    public void Set(Color[] colors)
+    public ReadOnlySpan<Color> ToReadOnlySpan()
+    {
+        var res = new Color[RowCount * ColumnCount];
+
+        int index = 0;
+
+        for (int r = 0; r < RowCount; r++)
+        {
+            for (int c = 0; c < ColumnCount; c++)
+            {
+                res[index] = _frame[r][c];
+
+                index++;
+            }
+        }
+
+        return res;
+    }
+
+    public void Set(ReadOnlySpan<Color> colors)
     {
         if (colors == null || colors.Length > Size)
         {
@@ -104,11 +123,12 @@ internal sealed class SenseHatFrame
 
     public SenseHatFrame Select(Range rowFilter, Range columnFilter)
     {
-        AssertInRange(rowFilter, columnFilter);
+        this.AssertInRange(rowFilter, columnFilter);
 
-        var subFrame = new SenseHatFrame(
-            rows: rowFilter.End.Value - rowFilter.Start.Value, 
-            columns: columnFilter.End.Value - columnFilter.Start.Value);
+        var rowCount = rowFilter.GetOffsetAndLength(RowCount).Item2;
+        var columnCount = columnFilter.GetOffsetAndLength(ColumnCount).Item2;
+
+        var subFrame = new SenseHatFrame(rows: rowCount, columns: columnCount);
 
         var subR = 0;
         var subC = 0;
@@ -131,31 +151,5 @@ internal sealed class SenseHatFrame
         }
 
         return subFrame;
-    }
-
-    private void AssertInRange(Range rows, Range columns)
-    {
-        if (rows.Start.Value < 0 || rows.End.Value >= RowCount)
-        {
-            throw new IndexOutOfRangeException($"Rows range {rows} must be in the range 0 - {RowCount - 1}!");
-        }
-
-        if (columns.Start.Value < 0 || columns.End.Value >= ColumnCount)
-        {
-            throw new IndexOutOfRangeException($"Columns range {columns} must be in the range 0 - {ColumnCount - 1}!");
-        }
-    }
-
-    private void AssertInRange(int row, int column)
-    {
-        if (row < 0 || row >= RowCount)
-        {
-            throw new IndexOutOfRangeException($"Row {row} must be in the range 0 - {RowCount - 1}!");
-        }
-
-        if (column < 0 || column >= ColumnCount)
-        {
-            throw new IndexOutOfRangeException($"Column {column} must be in the range 0 - {ColumnCount - 1}!");
-        }
     }
 }

@@ -26,7 +26,7 @@ class Program
         rootCommand.AddCommand(sp.GetRequiredService<FillDisplayCommand>());
         rootCommand.AddCommand(sp.GetRequiredService<PollSensorsCommand>());
         rootCommand.AddCommand(sp.GetRequiredService<RandomFillCommand>());
-        rootCommand.AddCommand(sp.GetRequiredService<DisplayCharactersCommand>());
+        rootCommand.AddCommand(sp.GetRequiredService<DisplayTextCommand>());
         
         return rootCommand.Invoke(args);
     }

@@ -12,7 +12,7 @@ internal sealed class PollSensorsCommand : SenseHatCommand
     protected override void Configure()
     {
         var intervalOption = new Option<int>(
-            name: "--interval-ms",
+            name: "--interval",
             description: "Polling interval in milliseconds",
             getDefaultValue: () => 5000);
 

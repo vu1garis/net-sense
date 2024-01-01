@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace SenseHatLib.Implementation;
@@ -39,6 +40,86 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
             throw new ArgumentException(nameof(delay));
         }
 
+        if (scroll)
+        {
+            ScrollCharacters(text, foreground, background, loop, delay);
+        }
+        else
+        {
+            WriteCharacters(text, foreground, background, loop, delay);
+        }
+    }
+
+    private void ScrollCharacters(string text, Color foreground, Color background, bool loop, int delay)
+    {
+        var frames = new Queue<SenseHatFrame>();
+
+        // convert the test to a series of frames in a FIFO queue
+        foreach (var c in text)
+        {
+            var bm = _bitmapFactory.GetBitMap(c) ?? throw new InvalidOperationException($"Character {c} not currently supported");
+
+            var frame = bm.Color(foreground: foreground, background: background);
+
+            var shf = new SenseHatFrame();
+
+            shf.Set(frame);
+
+            frames.Enqueue(shf);
+        }
+
+        SenseHatFrame? current = null;
+
+
+        while (true)
+        {
+            var next = frames.Dequeue();
+
+            if (next == null && loop)
+            {
+                throw new InvalidOperationException("Error, frame queue empty and loop == true");
+            }
+
+            if (current == null)
+            {
+                // first character to display...
+                current = next;
+
+                _client.Fill(current.ToReadOnlySpan());
+
+                Thread.Sleep(delay);
+            }
+            else
+            {
+                // we need to slowly replace current with next column by column
+                // until next becomes current...
+                for (int i = 1; i < SenseHatFrame.SENSEHAT_MAX_COLUMNS; i++)
+                {
+                    var df = current
+                        .Select(rowFilter:.., columnFilter:i..)
+                        .AppendColumns(next.Select(rowFilter:.., columnFilter:..i));
+
+                    _client.Fill(df.ToReadOnlySpan());
+
+                    Thread.Sleep(delay);
+                }
+
+                current = next;
+            }
+
+            if (loop)
+            {
+                frames.Enqueue(current);
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    private void WriteCharacters(string text, Color foreground, Color background, bool loop, int delay)
+    {
         while (true)
         {
             var cache = new Dictionary<char, Color[]>();
@@ -57,7 +138,7 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
 
                     _client.Fill(frame);
 
-                    if (loop)
+                    if (loop && !cache.ContainsKey(c))
                     {
                         cache[c] = frame;
                     }

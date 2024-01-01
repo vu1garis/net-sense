@@ -4,12 +4,12 @@ using SenseHatLib;
 
 namespace SenseHatCli.Commands;
 
-internal sealed class DisplayCharactersCommand : SenseHatCommand
+internal sealed class DisplayTextCommand : SenseHatCommand
 {
     private readonly ISenseHatDisplay _display;
 
-    public DisplayCharactersCommand(ISenseHatDisplay display, ISenseHatClient client)
-        : base("char", "sequentially display one or more characters", client)
+    public DisplayTextCommand(ISenseHatDisplay display, ISenseHatClient client)
+        : base("display", "sequentially display one or more characters", client)
     {
         _display = display ?? throw new ArgumentNullException(nameof(display));
     }
@@ -17,7 +17,7 @@ internal sealed class DisplayCharactersCommand : SenseHatCommand
     protected override void Configure()
     {
         var displayOption = new Option<string>(  
-            name: "--display",
+            name: "--text",
             description: "Characters to display",
             getDefaultValue: () => "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 
@@ -36,18 +36,24 @@ internal sealed class DisplayCharactersCommand : SenseHatCommand
             description: "Loop if true; otherwise false (default)",
             getDefaultValue: () => false);
 
+        var scrollOption = new Option<bool>(
+            name: "--scroll",
+            description: "Scroll if true; otherwise false (default)",
+            getDefaultValue: () => false);
+
         var intervalOption = new Option<int>(
-            name: "--interval-ms",
+            name: "--interval",
             description: "Pause between characters in milliseconds",
             getDefaultValue: () => 1000);
 
-        this.Add(displayOption);
+        this.Add(displayOption); 
         this.Add(fgOption);
         this.Add(bgOption);
         this.Add(loopOption);
+        this.Add(scrollOption);
         this.Add(intervalOption);
 
-        this.SetHandler((display, fgName, bgName, loop, interval) => 
+        this.SetHandler((display, fgName, bgName, loop, scroll, interval) => 
         {
             var fg = Color.FromName(fgName);
 
@@ -58,9 +64,9 @@ internal sealed class DisplayCharactersCommand : SenseHatCommand
                 foreground: fg,
                 background: bg,
                 loop: loop,
-                scroll: false,
+                scroll: scroll,
                 delay: interval);
                 
-        }, displayOption, fgOption, bgOption, loopOption, intervalOption);
+        }, displayOption, fgOption, bgOption, loopOption, scrollOption, intervalOption);
     }
 }
