@@ -5,7 +5,7 @@ namespace SenseHatLib.Implementation;
 
 internal static class SenseHatFrameExtensions
 {
-    public static void AssertInRange(this SenseHatFrame frame, Range rows, Range columns)
+    public static void AssertInRange(this ISenseHatFrame frame, Range rows, Range columns)
     {
         if (rows.Start.Value < 0 || rows.End.Value >= frame.RowCount)
         {
@@ -18,7 +18,7 @@ internal static class SenseHatFrameExtensions
         }
     }
 
-    public static void AssertInRange(this SenseHatFrame frame, int row, int column)
+    public static void AssertInRange(this ISenseHatFrame frame, int row, int column)
     {
         if (row < 0 || row >= frame.RowCount)
         {
@@ -31,7 +31,7 @@ internal static class SenseHatFrameExtensions
         }
     }
 
-    public static SenseHatFrame AppendColumns(this SenseHatFrame me, SenseHatFrame appendFrom)
+    public static SenseHatFrame AppendColumns(this ISenseHatFrame me, ISenseHatFrame appendFrom)
     {
         if (me.RowCount != appendFrom.RowCount)
         {
@@ -56,7 +56,7 @@ internal static class SenseHatFrameExtensions
         return res;
     }
     
-    public static SenseHatFrame AppendRows(this SenseHatFrame me, SenseHatFrame appendFrom)
+    public static SenseHatFrame AppendRows(this ISenseHatFrame me, ISenseHatFrame appendFrom)
     {
         if (me.ColumnCount != appendFrom.ColumnCount)
         {

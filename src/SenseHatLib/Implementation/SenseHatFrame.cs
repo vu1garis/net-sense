@@ -1,10 +1,9 @@
 using System;
 using System.Drawing;
 
-
 namespace SenseHatLib.Implementation;
 
-internal sealed class SenseHatFrame
+internal sealed class SenseHatFrame : ISenseHatFrame
 {
     public const int SENSEHAT_MAX_ROWS = 8;
 
@@ -121,7 +120,7 @@ internal sealed class SenseHatFrame
         }
     }
 
-    public SenseHatFrame Select(Range rowFilter, Range columnFilter)
+    public ISenseHatFrame Select(Range rowFilter, Range columnFilter)
     {
         this.AssertInRange(rowFilter, columnFilter);
 
