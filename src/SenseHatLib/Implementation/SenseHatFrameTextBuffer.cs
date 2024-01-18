@@ -41,7 +41,7 @@ internal sealed class SenseHatFrameTextBuffer : ISenseHatFrameTextBuffer
 
     public ISenseHatFrame? Next()
     {
-        SenseHatFrame? next = _buffer.Dequeue();
+        SenseHatFrame? next = _buffer.Count > 0 ? _buffer.Dequeue() : null;
 
         if (next != null && IsLooping)
         {
