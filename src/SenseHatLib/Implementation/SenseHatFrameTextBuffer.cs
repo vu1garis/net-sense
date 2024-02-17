@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -6,16 +7,23 @@ namespace SenseHatLib.Implementation;
 
 internal sealed class SenseHatFrameTextBuffer : ISenseHatFrameTextBuffer
 {
-    private readonly Queue<SenseHatFrame> _buffer = new Queue<SenseHatFrame>();
+    private readonly Queue<ISenseHatFrame> _buffer = new Queue<ISenseHatFrame>();
 
-    private readonly ISenseHatBitmapFactory _bitmapFactory;
+    private readonly ISenseHatFrameFactory _factory;
 
-    public SenseHatFrameTextBuffer(ISenseHatBitmapFactory factory)
+    public SenseHatFrameTextBuffer(ISenseHatFrameFactory factory)
     {
-        _bitmapFactory = factory ?? throw new ArgumentNullException(nameof(factory));
+        _factory = factory ?? throw new ArgumentNullException(nameof(factory));
     }
 
     public bool IsLooping { get; set; }
+
+    public bool IsScrolling { get; set; }
+
+    public void Clear()
+    {
+        _buffer.Clear();
+    }
 
     public void Append(string text, Color foreground, Color background)
     {
@@ -24,24 +32,21 @@ internal sealed class SenseHatFrameTextBuffer : ISenseHatFrameTextBuffer
             throw new ArgumentException(nameof(text));
         }
 
-        // convert the text to a series of frames in a FIFO queue
-        foreach (var c in text)
+        var frames = _factory.Create(text, foreground, background);
+
+        if (IsScrolling)
         {
-            var bm = _bitmapFactory.GetBitMap(c) ?? throw new InvalidOperationException($"Character {c} not currently supported");
-
-            var frame = bm.Color(foreground: foreground, background: background);
-
-            var shf = new SenseHatFrame();
-
-            shf.Set(frame);
-
-            _buffer.Enqueue(shf);
+            AppendScrollingFrames(frames);
+        }
+        else
+        {
+            AppendFrames(frames);
         }
     }
 
     public ISenseHatFrame? Next()
     {
-        SenseHatFrame? next = _buffer.Count > 0 ? _buffer.Dequeue() : null;
+        ISenseHatFrame? next = _buffer.Count > 0 ? _buffer.Dequeue() : default;
 
         if (next != null && IsLooping)
         {
@@ -50,4 +55,38 @@ internal sealed class SenseHatFrameTextBuffer : ISenseHatFrameTextBuffer
 
         return next;
     } 
+
+    private void AppendScrollingFrames(IList<ISenseHatFrame> frames)
+    {
+        for (int i = 0; i < frames.Count; i++)
+        {
+            var current = frames[i];
+
+            var next = i == frames.Count - 1 ? default : frames[i + 1];
+
+            if (next != default)
+            {
+                for (int j = 1; j < SenseHatFrame.SENSEHAT_MAX_COLUMNS; j++)
+                {
+                    var df = current
+                        .Select(rowFilter:.., columnFilter:j..)
+                        .AppendColumns(next.Select(rowFilter:.., columnFilter:..j));
+
+                    _buffer.Enqueue(df);
+                }
+            }
+            else
+            {
+                _buffer.Enqueue(current);
+            }
+        }
+    }
+
+    private void AppendFrames(IList<ISenseHatFrame> frames)
+    {
+        for (int i = 0; i < frames.Count; i++)
+        {
+            _buffer.Enqueue(frames[i]);
+        }
+    }
 }

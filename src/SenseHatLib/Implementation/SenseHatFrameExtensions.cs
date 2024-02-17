@@ -1,4 +1,5 @@
 using System;
+using System.CodeDom;
 using System.Drawing;
 
 namespace SenseHatLib.Implementation;
@@ -79,5 +80,5 @@ internal static class SenseHatFrameExtensions
         }
 
         return res;
-    } 
+    }
 }

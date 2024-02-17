@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions
         sc.AddSingleton<IColorFactory, ColorFactory>();
         sc.AddSingleton<ISenseHatClient, SenseHatClient>();
         sc.AddSingleton<ISenseHatDisplay, SenseHatDisplay>();
+        sc.AddSingleton<ISenseHatFrameFactory, SenseHatFrameFactory>();
 
         sc.AddTransient<ISenseHatFrameTextBuffer, SenseHatFrameTextBuffer>();
 

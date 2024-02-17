@@ -27,8 +27,10 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
     {
         ValidateParameters(text, delay);
 
-        _textBuffer.Append(text, foreground, background);
+        _textBuffer.Clear();
         _textBuffer.IsLooping = loop;
+        _textBuffer.IsScrolling = scroll;
+        _textBuffer.Append(text, foreground, background);
 
         _client.Clear();
 
@@ -36,27 +38,16 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
 
         while (true)
         {
-            var next = _textBuffer.Next();
+            current = _textBuffer.Next();
 
-            if (ShouldExitLoop(next, loop))
+            if (current == null)
             {
                 break;
             }
 
-            if (scroll)
-            {
-#pragma warning disable CS8604 // Possible null reference argument, ShouldExitLoop asserts null 
-                current = DisplayScrollFrames(current, next);
-#pragma warning restore CS8604 // Possible null reference argument.
-            }
-            else
-            {
-#pragma warning disable CS8604 // Possible null reference argument, ShouldExitLoop asserts null
-                DisplayFrame(next);
-#pragma warning restore CS8604 // Possible null reference argument.
-            }
+            _client.Fill(current.ToReadOnlySpan());
 
-            Thread.Sleep(delay);
+            Task.Delay(delay).Wait();
         }
     }
 
@@ -71,74 +62,6 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
         {
             throw new ArgumentException("Error, invalid delay expecting a millisecond value > 0", nameof(delay));
         }
-    }
-
-    private bool ShouldExitLoop(ISenseHatFrame? next, bool loop)
-    {
-        if (next == null)
-        {
-            if (loop)
-            {
-                throw new InvalidOperationException("Error, frame buffer empty and loop == true");
-            }
-            else
-            {
-                // there are no more frames in the buffer and we are not 
-                // looping so we just need to exit
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private ISenseHatFrame? DisplayScrollFrames(ISenseHatFrame? current, ISenseHatFrame next)
-    {
-        ISenseHatFrame? latestFrame = null;
-
-        if (current == null)
-        {
-            // current is used to keep track of the current frame.
-            // if we are in scrolling mode and the current frame is null
-            // it means we are about to display the first frame in which
-            // case we don't need to worry about scrolling and just
-            // set current to next, i.e. next is the first and current frame
-            latestFrame = next;
-
-            DisplayFrame(latestFrame);
-        }
-        else
-        {
-            // current is not null this means that it currently occupies the
-            // full display. We now we need to slowly replace current with next's
-            // pixels column by column until next becomes current.
-            latestFrame = ReplaceCurrentWithNext(current, next);
-        }
-
-        return latestFrame;
-    }
-
-    private ISenseHatFrame ReplaceCurrentWithNext(ISenseHatFrame current, ISenseHatFrame next)
-    {
-        for (int i = 1; i < SenseHatFrame.SENSEHAT_MAX_COLUMNS; i++)
-        {
-            var df = current
-                .Select(rowFilter:.., columnFilter:i..)
-                .AppendColumns(next.Select(rowFilter:.., columnFilter:..i));
-
-            DisplayFrame(df);
-        }
-
-        // once the for loop above has exited then the frame occupying
-        // the display will be equivalent to the frame next extracted from
-        // the buffer. return this frame (next) as the latest frame
-        return next;
-    }
-
-    private void DisplayFrame(ISenseHatFrame frame)
-    {
-        // just display the character
-        _client.Fill(frame.ToReadOnlySpan());    
     }
 
     #region IDisposable
