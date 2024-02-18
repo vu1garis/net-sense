@@ -23,7 +23,7 @@ public class SenseHatFrameFactory : ISenseHatFrameFactory
 
         var frames = new List<ISenseHatFrame>();
 
-        foreach (var c in text)
+        foreach (var c in text.ToUpperInvariant())
         {
             var bm = _bitmapFactory.GetBitMap(c) ?? throw new InvalidOperationException($"Character {c} not currently supported");
 

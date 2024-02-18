@@ -13,6 +13,7 @@ public static class ServiceCollectionExtensions
         sc.AddSingleton<ISenseHatClient, SenseHatClient>();
         sc.AddSingleton<ISenseHatDisplay, SenseHatDisplay>();
         sc.AddSingleton<ISenseHatFrameFactory, SenseHatFrameFactory>();
+        sc.AddSingleton<IUnixFortune, UnixFortune>();
 
         sc.AddTransient<ISenseHatFrameTextBuffer, SenseHatFrameTextBuffer>();
 

@@ -14,13 +14,7 @@ internal sealed class SenseHatBitmapFactory : ISenseHatBitmapFactory
     private readonly Lazy<Dictionary<char,BitArray>> _map = new Lazy<Dictionary<char,BitArray>>(
         () => 
         {
-            var assembly = Assembly.GetExecutingAssembly();
-
-            using var res = assembly.GetManifestResourceStream("SenseHatLib.tmap.xml") ?? throw new InvalidOperationException("tmap.xml not found");
-
-            using var sr = new StreamReader(res, Encoding.UTF8) ?? throw new InvalidOperationException("read tmap.xml failed");
-
-            var xml = XElement.Load(sr, LoadOptions.None);
+            var xml = DataResourceLoader.Load("SenseHatLib.data.tmap.xml", sr => XElement.Load(sr, LoadOptions.None));
 
             var map = new Dictionary<char, BitArray>();
 
