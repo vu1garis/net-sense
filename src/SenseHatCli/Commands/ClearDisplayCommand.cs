@@ -1,9 +1,11 @@
+using Microsoft.Extensions.Logging;
+
 namespace SenseHatCli.Commands;
 
 internal sealed class ClearDisplayCommand : SenseHatCommand
 {
-    public ClearDisplayCommand(ISenseHatClient client)
-        : base("clear", "clear the sensor display", client)
+    public ClearDisplayCommand(ILogger<ClearDisplayCommand> logger, ISenseHatClient client)
+        : base(logger, "clear", "clear the sensor display", client)
     {
     }
 

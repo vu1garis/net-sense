@@ -2,6 +2,7 @@
 using System.CommandLine;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 using SenseHatLib;
 using SenseHatCli.Commands;
@@ -13,6 +14,8 @@ class Program
     public static async Task<int> Main(string[] args)
     {
         var sc = new ServiceCollection();
+
+        sc.AddLogging(builder => builder.AddConsole());
 
         sc.AddSenseHatServices();
         sc.AddSenseHatCommands();

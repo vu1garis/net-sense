@@ -1,4 +1,5 @@
 using System.Drawing;
+using Microsoft.Extensions.Logging;
 
 namespace SenseHatCli.Commands;
 
@@ -6,8 +7,8 @@ internal sealed class CurrentSensorValuesCommand : SenseHatCommand
 {
     private readonly ISenseHatDisplay _display;
 
-    public CurrentSensorValuesCommand(ISenseHatDisplay display, ISenseHatClient client)
-        : base("current", "display the current sensor values to the console", client)
+    public CurrentSensorValuesCommand(ILogger<CurrentSensorValuesCommand> logger, ISenseHatDisplay display, ISenseHatClient client)
+        : base(logger, "current", "display the current sensor values to the console", client)
     {
         _display = display ?? throw new ArgumentNullException(nameof(display));
     }
@@ -45,7 +46,7 @@ internal sealed class CurrentSensorValuesCommand : SenseHatCommand
         {
             var current = await Client.ReadSensors().ConfigureAwait(false);
 
-            Console.WriteLine(current.ToString());
+            Logger.LogInformation(current.ToString());
 
             var fg = Color.FromName(fgName);
 

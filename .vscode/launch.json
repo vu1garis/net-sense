@@ -12,8 +12,10 @@
             "program": "${workspaceFolder}/src/SenseHatCli/bin/Debug/net8.0/SenseHatCli.dll",
             "args": [
                 "random",
-                "--loop", "true",
-                "--interval", "64"
+                "--loop",
+                "true",
+                "--interval",
+                "64"
             ],
             "cwd": "${workspaceFolder}/src/SenseHatCli",
             "console": "internalConsole",
@@ -27,7 +29,8 @@
             "program": "${workspaceFolder}/src/SenseHatCli/bin/Debug/net8.0/SenseHatCli.dll",
             "args": [
                 "poll",
-                "--interval", "1000"
+                "--interval",
+                "1000"
             ],
             "cwd": "${workspaceFolder}/src/SenseHatCli",
             "console": "internalConsole",
@@ -41,7 +44,8 @@
             "program": "${workspaceFolder}/src/SenseHatCli/bin/Debug/net8.0/SenseHatCli.dll",
             "args": [
                 "fill",
-                "--colour", "Red"
+                "--colour",
+                "Red"
             ],
             "cwd": "${workspaceFolder}/src/SenseHatCli",
             "console": "internalConsole",
@@ -55,8 +59,10 @@
             "program": "${workspaceFolder}/src/SenseHatCli/bin/Debug/net8.0/SenseHatCli.dll",
             "args": [
                 "current",
-                "--loop", "true", 
-                "--interval", "64"
+                "--loop",
+                "true",
+                "--interval",
+                "64"
             ],
             "cwd": "${workspaceFolder}/src/SenseHatCli",
             "console": "internalConsole",
@@ -68,11 +74,13 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/src/SenseHatCli/bin/Debug/net8.0/SenseHatCli.dll",
-            "args": ["clear"],
+            "args": [
+                "clear"
+            ],
             "cwd": "${workspaceFolder}/src/SenseHatCli",
             "console": "internalConsole",
             "stopAtEntry": false
-        },        
+        },
         {
             "name": "Display Debug",
             "type": "coreclr",
@@ -80,11 +88,15 @@
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/src/SenseHatCli/bin/Debug/net8.0/SenseHatCli.dll",
             "args": [
-                "display", 
-                "--text", "IT WAS THE BEST OF TIMES, IT WAS THE WORST OF TIMES...", 
-                "--loop", "true", 
-                "--interval", "1", 
-                "--scroll", "true"
+                "display",
+                "--text",
+                "IT WAS THE BEST OF TIMES, IT WAS THE WORST OF TIMES...",
+                "--loop",
+                "true",
+                "--interval",
+                "1",
+                "--scroll",
+                "true"
             ],
             "cwd": "${workspaceFolder}/src/SenseHatCli",
             "console": "internalConsole",

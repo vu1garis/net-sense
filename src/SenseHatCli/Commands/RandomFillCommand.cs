@@ -1,4 +1,5 @@
 using System.Threading;
+using Microsoft.Extensions.Logging;
 
 namespace SenseHatCli.Commands;
 
@@ -6,8 +7,8 @@ internal sealed class RandomFillCommand : SenseHatCommand
 {
     private readonly IColorFactory _colorFactory;
 
-    public RandomFillCommand(ISenseHatClient client, IColorFactory colorFactory)
-        : base("random", "fill the sensor display with random RGB colours", client)
+    public RandomFillCommand(ILogger<RandomFillCommand> logger, ISenseHatClient client, IColorFactory colorFactory)
+        : base(logger, "random", "fill the sensor display with random RGB colours", client)
     {
         _colorFactory = colorFactory ?? throw new ArgumentNullException(nameof(colorFactory));
     }

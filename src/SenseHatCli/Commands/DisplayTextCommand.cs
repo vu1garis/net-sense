@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.Threading;
+using Microsoft.Extensions.Logging;
 using SenseHatLib;
 
 namespace SenseHatCli.Commands;
@@ -8,8 +9,8 @@ internal sealed class DisplayTextCommand : SenseHatCommand
 {
     private readonly ISenseHatDisplay _display;
 
-    public DisplayTextCommand(ISenseHatDisplay display, ISenseHatClient client)
-        : base("display", "sequentially display one or more characters", client)
+    public DisplayTextCommand(ILogger<DisplayTextCommand> logger, ISenseHatDisplay display, ISenseHatClient client)
+        : base(logger, "display", "sequentially display one or more characters", client)
     {
         _display = display ?? throw new ArgumentNullException(nameof(display));
     }
