@@ -53,19 +53,19 @@ internal sealed class DisplayTextCommand : SenseHatCommand
         this.Add(scrollOption);
         this.Add(intervalOption);
 
-        this.SetHandler((display, fgName, bgName, loop, scroll, interval) => 
+        this.SetHandler(async (display, fgName, bgName, loop, scroll, interval) => 
         {
             var fg = Color.FromName(fgName);
 
             var bg = Color.FromName(bgName);
 
-            _display.DisplayText(
+            await _display.DisplayText(
                 text: display,
                 foreground: fg,
                 background: bg,
                 loop: loop,
                 scroll: scroll,
-                delay: interval);
+                delay: interval).ConfigureAwait(false);
                 
         }, displayOption, fgOption, bgOption, loopOption, scrollOption, intervalOption);
     }

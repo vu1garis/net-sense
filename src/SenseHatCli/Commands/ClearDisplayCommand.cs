@@ -9,6 +9,6 @@ internal sealed class ClearDisplayCommand : SenseHatCommand
 
     protected override void Configure()
     {
-        this.SetHandler(() => Client.Clear());
+        this.SetHandler(async () => await Client.Clear().ConfigureAwait(false));
     }
 }

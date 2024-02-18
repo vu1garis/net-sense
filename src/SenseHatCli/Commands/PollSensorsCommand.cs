@@ -18,15 +18,15 @@ internal sealed class PollSensorsCommand : SenseHatCommand
 
         this.Add(intervalOption);
 
-        this.SetHandler((interval) => 
+        this.SetHandler(async (interval) => 
         {
             while (true)
             {
-                var current = Client.ReadSensors();
+                var current = await Client.ReadSensors().ConfigureAwait(false);
 
                 Console.WriteLine(current.ToString());
 
-                Thread.Sleep(interval);
+                await Task.Delay(interval).ConfigureAwait(false);
             }
         }, intervalOption);
     }

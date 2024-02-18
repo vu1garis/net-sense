@@ -17,13 +17,16 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
         _textBuffer = textBuffer ?? throw new ArgumentNullException(nameof(textBuffer));
     }
 
-    public void Clear() => _client.Clear();
+    public async Task Clear() 
+        => await _client.Clear().ConfigureAwait(false);
 
-    public void Fill(Color color) => _client.Fill(color);
+    public async Task Fill(Color color) 
+        => await _client.Fill(color).ConfigureAwait(false);
     
-    public void Fill(ReadOnlySpan<Color> colors) => _client.Fill(colors);
+    public async Task Fill(IEnumerable<Color> colors) 
+        => await _client.Fill(colors.ToArray()).ConfigureAwait(false);
 
-    public void DisplayText(string text, Color foreground, Color background, bool loop = false, bool scroll = false, int delay = 1000)
+    public async Task DisplayText(string text, Color foreground, Color background, bool loop = false, bool scroll = false, int delay = 1000)
     {
         ValidateParameters(text, delay);
 
@@ -32,7 +35,7 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
         _textBuffer.IsScrolling = scroll;
         _textBuffer.Append(text, foreground, background);
 
-        _client.Clear();
+        await _client.Clear().ConfigureAwait(false);
 
         ISenseHatFrame? current = null;
 
@@ -45,9 +48,9 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
                 break;
             }
 
-            _client.Fill(current.ToReadOnlySpan());
+            await _client.Fill(current.ToArray()).ConfigureAwait(false);
 
-            Task.Delay(delay).Wait();
+            await Task.Delay(delay).ConfigureAwait(false);
         }
     }
 

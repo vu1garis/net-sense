@@ -6,7 +6,7 @@ internal sealed class ColorFactory : IColorFactory
 {
     private Lazy<int[]> _valid = new Lazy<int[]>(() => Enumerable.Range(0, 256).ToArray());
 
-    public ReadOnlySpan<Color> GetRandomColors(int count = 64)
+    public Color[] GetRandomColors(int count = 64)
     {
         if (count <= 0)
         {

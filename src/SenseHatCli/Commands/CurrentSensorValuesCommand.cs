@@ -41,9 +41,9 @@ internal sealed class CurrentSensorValuesCommand : SenseHatCommand
         this.Add(loopOption);
         this.Add(intervalOption);
 
-        this.SetHandler((fgName, bgName, loop, interval) => 
+        this.SetHandler(async (fgName, bgName, loop, interval) => 
         {
-            var current = Client.ReadSensors();
+            var current = await Client.ReadSensors().ConfigureAwait(false);
 
             Console.WriteLine(current.ToString());
 
@@ -53,13 +53,13 @@ internal sealed class CurrentSensorValuesCommand : SenseHatCommand
 
             var display = $"Temp1 = {current.Temp1}, Temp2 = {current.Temp2}, Pressure = {current.Pressure}, Humidity = {current.Humidity}";
 
-            _display.DisplayText(
+            await _display.DisplayText(
                 text: display,
                 foreground: fg,
                 background: bg,
                 loop: loop,
                 scroll: true,
-                delay: interval);
+                delay: interval).ConfigureAwait(false);
                 
         }, fgOption, bgOption, loopOption, intervalOption);
     }

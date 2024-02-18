@@ -10,7 +10,7 @@ namespace SenseHatCli;
 
 class Program
 {
-    static int Main(string[] args)
+    public static async Task<int> Main(string[] args)
     {
         var sc = new ServiceCollection();
 
@@ -28,6 +28,6 @@ class Program
         rootCommand.AddCommand(sp.GetRequiredService<RandomFillCommand>());
         rootCommand.AddCommand(sp.GetRequiredService<DisplayTextCommand>());
         
-        return rootCommand.Invoke(args);
+        return await rootCommand.InvokeAsync(args);
     }
 }

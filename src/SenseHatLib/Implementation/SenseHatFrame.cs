@@ -81,7 +81,7 @@ internal sealed class SenseHatFrame : ISenseHatFrame
         _frame[row][column] = color;
     }
 
-    public ReadOnlySpan<Color> ToReadOnlySpan()
+    public Color[] ToArray()
     {
         var res = new Color[RowCount * ColumnCount];
 
@@ -100,9 +100,9 @@ internal sealed class SenseHatFrame : ISenseHatFrame
         return res;
     }
 
-    public void Set(ReadOnlySpan<Color> colors)
+    public void Set(IList<Color> colors)
     {
-        if (colors == null || colors.Length > Size)
+        if (colors == null || colors.Count > Size)
         {
             throw new InvalidOperationException($"Color[] must be non-null and no bigger than {Size}");
         }

@@ -16,9 +16,9 @@ public interface ISenseHatFrame
 
     void Set(int row, int column, Color color);
 
-    ReadOnlySpan<Color> ToReadOnlySpan();
+    Color[] ToArray();
 
-    void Set(ReadOnlySpan<Color> colors);
+    void Set(IList<Color> colors);
     
     ISenseHatFrame Select(Range rowFilter, Range columnFilter);
 }
