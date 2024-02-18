@@ -30,6 +30,7 @@ class Program
         rootCommand.AddCommand(sp.GetRequiredService<PollSensorsCommand>());
         rootCommand.AddCommand(sp.GetRequiredService<RandomFillCommand>());
         rootCommand.AddCommand(sp.GetRequiredService<DisplayTextCommand>());
+        rootCommand.AddCommand(sp.GetRequiredService<FortuneCommand>());
         
         return await rootCommand.InvokeAsync(args);
     }
