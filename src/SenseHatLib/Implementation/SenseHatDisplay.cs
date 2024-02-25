@@ -21,16 +21,16 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
         _fortune = fortune ?? throw new ArgumentNullException(nameof(fortune));
     }
 
-    public async Task Clear() 
-        => await _client.Clear().ConfigureAwait(false);
+    public void Clear() 
+        =>  _client.Clear();
 
-    public async Task Fill(Color color) 
-        => await _client.Fill(color).ConfigureAwait(false);
+    public void Fill(Color color) 
+        =>  _client.Fill(color);
     
-    public async Task Fill(IEnumerable<Color> colors) 
-        => await _client.Fill(colors.ToArray()).ConfigureAwait(false);
+    public void Fill(IEnumerable<Color> colors) 
+        =>  _client.Fill(colors.ToArray());
 
-    public async Task DisplayFortune(Color foreground, Color background, bool loop = false, int delay = 1000)
+    public void DisplayFortune(Color foreground, Color background, bool loop = false, int delay = 1000)
     {
         if (delay < 0)
         {
@@ -46,7 +46,7 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
         {
             _textBuffer.Clear();
                     
-            await _client.Clear().ConfigureAwait(false);
+             _client.Clear();
 
             var fortune = _fortune.Next() ?? throw new InvalidOperationException("?? what no fortune? How?");
 
@@ -61,9 +61,9 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
                     break;
                 }
 
-                await _client.Fill(current.ToArray()).ConfigureAwait(false);
+                 _client.Fill(current.ToArray());
 
-                await Task.Delay(millisecondsDelay:1).ConfigureAwait(false);
+                 Task.Delay(millisecondsDelay:1).Wait();
             }
 
             if (!loop)
@@ -72,13 +72,13 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
             }
             else
             {
-                await Task.Delay(delay).ConfigureAwait(false);
+                 void.Delay(delay);
             }
         }
     }
 
 
-    public async Task DisplayText(string text, Color foreground, Color background, bool loop = false, bool scroll = false, int delay = 1000)
+    public void DisplayText(string text, Color foreground, Color background, bool loop = false, bool scroll = false, int delay = 1000)
     {
         ValidateParameters(text, delay);
 
@@ -87,7 +87,7 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
         _textBuffer.IsScrolling = scroll;
         _textBuffer.Append(text, foreground, background);
 
-        await _client.Clear().ConfigureAwait(false);
+         _client.Clear();
 
         ISenseHatFrame? current = null;
 
@@ -100,9 +100,9 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
                 break;
             }
 
-            await _client.Fill(current.ToArray()).ConfigureAwait(false);
+             _client.Fill(current.ToArray());
 
-            await Task.Delay(delay).ConfigureAwait(false);
+             void.Delay(delay);
         }
     }
 

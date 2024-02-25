@@ -1,3 +1,4 @@
 {
-    "dotnet.defaultSolution": "net-sense.sln"
+    "dotnet.defaultSolution": "net-sense.sln",
+    "dotnetAcquisitionExtension.enableTelemetry": false
 }

@@ -16,41 +16,36 @@ internal sealed class SenseHatClient : ISenseHatClient
 
     public SenseHat Hat => _sh.Value;
 
-    public async Task Clear() 
-        => await Fill(Color.Empty);
+    public void Clear() 
+        => Fill(Color.Empty);
 
-    public async Task Fill(Color[] colors) 
-        => await Task.Run(() => Hat.Write(new ReadOnlySpan<Color>(colors)))
-                     .ConfigureAwait(false);
+    public void Fill(Color[] colors) 
+        => Hat.Write(new ReadOnlySpan<Color>(colors));
     
-    public async Task Fill(Color color) 
-        => await Task.Run(() => Hat.Fill(color))
-                     .ConfigureAwait(false);
+    public void Fill(Color color) 
+        => Hat.Fill(color);
 
-    public async Task<SensorReadings> ReadSensors()
+    public SensorReadings ReadSensors()
     {
-        return await Task.Run(() =>
-        { 
-            var t1 = Hat.Temperature;
-            var p = Hat.Pressure;
+        var t1 = Hat.Temperature;
+        var p = Hat.Pressure;
 
-            return new SensorReadings
-            {
-                Temp1 = t1,
-                Temp2 = Hat.Temperature2,
-                Pressure = p,
-                Humidity = Hat.Humidity,
-                Acceleration = Hat.Acceleration,
-                AngularRate = Hat.AngularRate,
-                MagneticInduction = Hat.MagneticInduction,
-                Altitude = WeatherHelper.CalculateAltitude(p, s_defaultSeaLevelPressure, t1),
-                HoldingButton = Hat.HoldingButton,
-                HoldingUp = Hat.HoldingUp,
-                HoldingDown = Hat.HoldingDown,
-                HoldingLeft = Hat.HoldingLeft,
-                HoldingRight = Hat.HoldingRight
-            };
-        }).ConfigureAwait(false);
+        return new SensorReadings
+        {
+            Temp1 = t1,
+            Temp2 = Hat.Temperature2,
+            Pressure = p,
+            Humidity = Hat.Humidity,
+            Acceleration = Hat.Acceleration,
+            AngularRate = Hat.AngularRate,
+            MagneticInduction = Hat.MagneticInduction,
+            Altitude = WeatherHelper.CalculateAltitude(p, s_defaultSeaLevelPressure, t1),
+            HoldingButton = Hat.HoldingButton,
+            HoldingUp = Hat.HoldingUp,
+            HoldingDown = Hat.HoldingDown,
+            HoldingLeft = Hat.HoldingLeft,
+            HoldingRight = Hat.HoldingRight
+        };
     }
 
     #region IDisposable

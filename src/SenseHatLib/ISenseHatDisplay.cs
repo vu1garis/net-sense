@@ -4,19 +4,19 @@ namespace SenseHatLib;
 
 public interface ISenseHatDisplay
 {
-    Task Clear();
+    void Clear();
 
-    Task Fill(Color color); 
+    void Fill(Color color); 
     
-    Task Fill(IEnumerable<Color> colors);
+    void Fill(IEnumerable<Color> colors);
 
-    Task DisplayFortune(
+    void DisplayFortune(
         Color foreground, 
         Color background, 
         bool loop = false, 
         int delay = 1000);
 
-    Task DisplayText(
+    void DisplayText(
         string text,
         Color foreground,
         Color background,

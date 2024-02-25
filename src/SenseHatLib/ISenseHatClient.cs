@@ -10,11 +10,11 @@ public interface ISenseHatClient : IDisposable
 {
     SenseHat Hat { get; }
 
-    Task Clear();
+    void Clear();
 
-    Task Fill(Color color); 
+    void Fill(Color color); 
     
-    Task Fill(Color[] colors);
+    void Fill(Color[] colors);
 
-    Task<SensorReadings> ReadSensors();
+    SensorReadings ReadSensors();
 }
