@@ -19,11 +19,11 @@ internal sealed class FillDisplayCommand : SenseHatCommand
 
         this.Add(colourOption);
 
-        this.SetHandler(async (colorName) =>
+        this.SetHandler((colorName) =>
         {
             var c = Color.FromName(colorName);
             
-            await Client.Fill(c).ConfigureAwait(false);
+            Client.Fill(c);
         }, colourOption);
     }
 }

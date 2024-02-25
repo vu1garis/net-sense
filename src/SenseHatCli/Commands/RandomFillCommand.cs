@@ -28,20 +28,20 @@ internal sealed class RandomFillCommand : SenseHatCommand
         this.Add(loopOption);
         this.Add(intervalOption);
 
-        this.SetHandler(async (loop, interval) => 
+        this.SetHandler((loop, interval) => 
         {
             while (true)
             {
                 var colors = _colorFactory.GetRandomColors(64);
 
-                await Client.Fill(colors).ConfigureAwait(false);
+                Client.Fill(colors);
 
                 if (!loop)
                 {
                     break;
                 }
 
-                await Task.Delay(interval).ConfigureAwait(false);
+                Task.Delay(interval).Wait();
             }
             
         }, loopOption, intervalOption);

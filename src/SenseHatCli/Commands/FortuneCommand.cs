@@ -42,17 +42,17 @@ internal sealed class FortuneCommand : SenseHatCommand
         this.Add(loopOption);
         this.Add(intervalOption);
 
-        this.SetHandler(async (fgName, bgName, loop, interval) => 
+        this.SetHandler((fgName, bgName, loop, interval) => 
         {
             var fg = Color.FromName(fgName);
 
             var bg = Color.FromName(bgName);
 
-            await _display.DisplayFortune(
+            _display.DisplayFortune(
                 foreground: fg,
                 background: bg,
                 loop: loop,
-                delay: interval).ConfigureAwait(false);
+                delay: interval);
                 
         }, fgOption, bgOption, loopOption, intervalOption);
     }

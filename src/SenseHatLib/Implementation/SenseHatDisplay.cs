@@ -46,7 +46,7 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
         {
             _textBuffer.Clear();
                     
-             _client.Clear();
+            _client.Clear();
 
             var fortune = _fortune.Next() ?? throw new InvalidOperationException("?? what no fortune? How?");
 
@@ -63,7 +63,7 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
 
                  _client.Fill(current.ToArray());
 
-                 Task.Delay(millisecondsDelay:1).Wait();
+                 Task.Delay(16).Wait();
             }
 
             if (!loop)
@@ -72,7 +72,7 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
             }
             else
             {
-                 void.Delay(delay);
+                 Task.Delay(delay).Wait();
             }
         }
     }
@@ -102,7 +102,7 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
 
              _client.Fill(current.ToArray());
 
-             void.Delay(delay);
+             Task.Delay(delay).Wait();
         }
     }
 
