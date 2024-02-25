@@ -5,6 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Fortune Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/SenseHatCli/bin/Debug/net8.0/SenseHatCli.dll",
+            "args": [
+                "fortune",
+                "--loop",
+                "true",
+                "--interval",
+                "1000"
+            ],
+            "cwd": "${workspaceFolder}/src/SenseHatCli",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
             "name": "Random Debug",
             "type": "coreclr",
             "request": "launch",
