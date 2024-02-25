@@ -63,7 +63,7 @@ internal sealed class SenseHatDisplay : ISenseHatDisplay, IDisposable
 
                 await _client.Fill(current.ToArray()).ConfigureAwait(false);
 
-                await Task.Delay(millisecondsDelay:64).ConfigureAwait(false);
+                await Task.Delay(millisecondsDelay:1).ConfigureAwait(false);
             }
 
             if (!loop)
